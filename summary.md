@@ -6,7 +6,7 @@
 
 Look at these code snippets.
 
-`N1_1.java` at Example Code of `<<Clean Code>>`[^1].
+`N1_1.java` at Example Code of `<<Clean Code>>`[^2].
 
 ```
 public int x() {
@@ -31,7 +31,7 @@ public int x() {
   }
 ```
 
-`N1_2.java` at Example Code of `<<Clean Code>>`[^1].
+`N1_2.java` at Example Code of `<<Clean Code>>`[^2].
 
 ```
 public int score() {
@@ -53,15 +53,15 @@ public int score() {
   }
 ```
 
-which one is readable? Obviously, is `N1_2.java` at Example Code of `<<Clean Code>>`[^1], isn't it? 
+which one is readable? Obviously, is `N1_2.java` at Example Code of `<<Clean Code>>`[^2], isn't it? 
 
-(Though `N1_2.java` at Example Code of `<<Clean Code>>`[^1] is NOT more complete than `N1_1.java` at Example Code of `<<Clean Code>>`[^1].)
+(Though `N1_2.java` at Example Code of `<<Clean Code>>`[^2] is NOT more complete than `N1_1.java` at Example Code of `<<Clean Code>>`[^2].)
 
 ##### N2: Choose Names at the Appropriate Level of Abstraction
 
 Again, look at these code snippets.
 
-`N2_1.java` at Example Code of `<<Clean Code>>`[^1]
+`N2_1.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 public interface Modem {
@@ -73,7 +73,7 @@ public interface Modem {
   }
 ```
 
-`N2_2.java` at Example Code of `<<Clean Code>>`[^1]
+`N2_2.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 public interface Modem {
@@ -85,9 +85,9 @@ public interface Modem {
   }
 ```
 
-which is more extensible? Though they have some extensibility, in `N2_2.java` at Example Code of `<<Clean Code>>`[^1], the name of property looks so descriptive in different cases (***not only*** about phone numbers, ***but also*** about all connectors). And
+which is more extensible? Though they have some extensibility, in `N2_2.java` at Example Code of `<<Clean Code>>`[^2], the name of property looks so descriptive in different cases (***not only*** about phone numbers, ***but also*** about all connectors). And
 
-in `N2_2.java` at Example Code of `<<Clean Code>>`[^1], he name of property looks so descriptive ***only*** in cases about phone numbers. Thus, it is better way to name these property like in `N2_2.java` at Example Code of `<<Clean Code>>`[^1].
+in `N2_2.java` at Example Code of `<<Clean Code>>`[^2], he name of property looks so descriptive ***only*** in cases about phone numbers. Thus, it is better way to name these property like in `N2_2.java` at Example Code of `<<Clean Code>>`[^2].
 
 ##### N3: Use Standard Nomenclature Where Possible
 
@@ -107,7 +107,7 @@ If you are defining a method of a class that converts it to string, it is recomm
 
 ##### N4: Unambiguous Names
 
-`N4_1.java` at Example Code of `<<Clean Code>>`[^1]
+`N4_1.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 private String doRename() throws Exception
@@ -128,7 +128,7 @@ as a reader, can one see the difference between `doRename` and `renamePage`? Obv
 
 From the old standard `Bowling Game`.
 
-`N5_1.java` at Example Code of `<<Clean Code>>`[^1] 
+`N5_1.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
  private void rollMany(int n, int pins)
@@ -150,7 +150,7 @@ Such as `m_phoneNumber` is bad way to give a name at present. It is better to na
 
 From `testNG`.
 
-`N7_1.java` at Example Code of `<<Clean Code>>`[^1]
+`N7_1.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 public ObjectOutputStream getOos() throws IOException {
@@ -161,9 +161,9 @@ public ObjectOutputStream getOos() throws IOException {
    }
 ```
 
-`N7_2.java` at Example Code of `<<Clean Code>>`[^1] looks better since one can more easily to known what actually the method do. On the other hand, I rename `m_oos` to `myOss` according `N6: Avoid Encodings` section.
+`N7_2.java` at Example Code of `<<Clean Code>>`[^2] looks better since one can more easily to known what actually the method do. On the other hand, I rename `m_oos` to `myOss` according `N6: Avoid Encodings` section.
 
-`N7_2.java` at Example Code of `<<Clean Code>>`[^1]
+`N7_2.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 public ObjectOutputStream createOrReturnOos() throws IOException {
@@ -198,7 +198,7 @@ Be aware of boundary conditions.
 
 A famous example as follows.
 
-`T5_1.java` at Example Code of `<<Clean Code>>`[^1]
+`T5_1.java` at Example Code of `<<Clean Code>>`[^2]
 
 ```
 import java.io.*;
@@ -252,7 +252,7 @@ It is a wise way to do test for function or method once one finish writing it.
 ##### T7: Patterns of Failure Are Revealing
 To know where the bugs is, one can either:
 + Look at error log.
-+ Extra info[^0]: Use debugger to debug step by step. 
++ Extra info[^1]: Use debugger to debug step by step. 
 
 ##### T8: Test Coverage Pattern Can Be Revealing
 
@@ -262,9 +262,9 @@ Like `T7: Patterns of Failure Are Revealing` section said.
 
 It should take less time as possible to test it once since in developement of a big project, it may be tested more than one hundred times.
 
-##### Extra info[^0]: T10: Tests Should Be simple
+##### Extra info[^1]: T10: Tests Should Be simple
 
 
-[^0]: My extraneous info.
+[^1]: My extraneous info.
 
-[^1]: [Example Code of `<<Clean Code>>`]()
+[^2]: [Example Code of `<<Clean Code>>`]()
