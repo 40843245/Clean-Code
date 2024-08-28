@@ -1,4 +1,4 @@
-# <<Clean Code>>
+# `<<Clean Code>>`
 ## intro
 `<<Clean Code>>` is a book about how to write a clean code.
 
