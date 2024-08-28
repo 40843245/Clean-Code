@@ -252,7 +252,7 @@ It is a wise way to do test for function or method once one finish writing it.
 ##### T7: Patterns of Failure Are Revealing
 To know where the bugs is, one can either:
 + Look at error log.
-+ Extra info[^1]: Use debugger to debug step by step. 
++ Extra info[^1] Use debugger to debug step by step. 
 
 ##### T8: Test Coverage Pattern Can Be Revealing
 
@@ -262,7 +262,7 @@ Like `T7: Patterns of Failure Are Revealing` section said.
 
 It should take less time as possible to test it once since in developement of a big project, it may be tested more than one hundred times.
 
-##### Extra info[^1]: T10: Tests Should Be simple
+##### Extra info[^1] T10: Tests Should Be simple
 
 
 [^1]: My extraneous info.
