@@ -3,7 +3,7 @@
 `<<Clean Code>>` is a book about how to write a clean code.
 
 ## buy it
-You can buy it in english version at [buy Clean Code english version](https://www.bing.com/search?q=Clean%20Code&pc=0P122&ptag=C999N1994A8144C18463&form=PCF128&conlogo=CT3210127)
+You can buy it in english version at [buy Clean Code english version](https://www.goodreads.com/book/show/3735293-clean-code)
 
 ## get free
 
