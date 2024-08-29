@@ -411,7 +411,687 @@ In this case, if `BaseClass` depends on `DerivedClass`. Then phenomenons will oc
 
 These phenomenons are strange, aren't they?
 
+##### G8: Avoid Too Much Information
+Too much information in code is NOT necessary. It should be removed.
 
+If your code contains too much information as comment, then your code may not easily to read and not clean. Like name of variable does NOT dispose what the variable indicates.
+
+##### G9: Dead Code Should be Removed
+
+Again, dead code should be removed. Like dead functions should be removed. Discussed in `F4: Remove Dead Function` section.
+
+##### G9: Vertical Seperation
+
+> [!IMPORTANT]
+> It is a good practice to use a variable, function or method as near as possible after definition.
+
+As a reader of code, one does not hope that a variable is used after one hundred line of defintion.
+
+Example of not good practice.
+
+`G10_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class Account{
+	String name;
+	int balance;
+
+	public Account(){
+		this.name="Nico"
+		this.balance=0;
+	}
+	public Account(String name){
+		this.name=name;
+	}
+	public Account(String name,int balance){
+		this.name=name;
+		this.balance = isValid(balance) ? balance : 0 ;
+	}
+	private void withDraw();
+
+	private Boolean isValid(int balance){
+		return balance >=0;
+	}
+}
+```
+
+Example of good practice.
+
+`G10_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class Account{
+	String name;
+	int balance;
+
+	public Account(){
+		this.name="Nico"
+		this.balance=0;
+	}
+	public Account(String name){
+		this.name=name;
+	}
+	public Account(String name,int balance){
+		this.name=name;
+		this.balance = isValid(balance) ? balance : 0 ;
+	}
+
+	private Boolean isValid(int balance){
+		return balance >=0;
+	}
+
+	private void withDraw(){}
+}
+```
+
+##### G11: Incosistency Is Not Allowed
+
+> [!IMPORTANT]
+> Incosistency Is Not Allowed. Such as it is not allowed that name the first variable with `camel case` style and name the second variable with `delimiter-separated` style.
+
+##### G12: Avoid Clutter
+Again, clutters (such as `dead function`) should be removed.
+
+##### G13: Avoid Artificial Coupling
+
+> [!IMPORTANT]
+> A clean code should have less coupling as possible.
+
+##### G14: Avoid Feature Envy
+
+> [!IMPORTANT]
+> Always avoid feature envy.
+
+What is Feature Envy?
++ [Feature envy](https://swiftlynomad.medium.com/code-smells-couplers-feature-envy-c54efaf5eef3#:~:text=%E2%80%9CFeature%20Envy%E2%80%9D%20is%20a%20code%20smell%20that%20occurs,class%20rather%20than%20focusing%20on%20its%20own%20responsibilities.)
+
+##### G15: Slector Arguments
+
+##### G16: Obscured Intent 
+
+Example of not good example.
+
+`G16_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+ public int m_otCalc() {
+   return iThsWkd * iThsRte +
+     (int) Math.round(0.5 * iThsRte *
+       Math.max(0, iThsWkd - 400)
+     );
+   }
+```
+
+##### G17: Avoid Misplace Responsibility
+
+##### G18: Avoid Inappropriate Static
+
+##### G19: Use Explainary variables
+
+Again, the name of variable, function, and method should
+
+##### G20: Function Name Should Say What hey Do
+ be descriptive.
+ 
+One should contain a varible mean that should Say What hey Do
+
+##### G21: Understand the Algorithm
+
+> [!IMPORTANT]
+> Understanding the algorithm is important. It can help you to consider all boundary conditions.
+
+##### G22: Make Logical Dependepency Physical
+
+`G22_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class HourlyReporter {
+	private HourlyReportFormatter formatter;
+	private List<LineItem> page;
+	private final int PAGE_SIZE = 55;
+
+	public HourlyReporter(HourlyReportFormatter formatter) {
+	  this.formatter = formatter;
+	  page = new ArrayList<LineItem>();
+	}
+
+	public void generateReport(List<HourlyEmployee> employees) {
+	  for (HourlyEmployee e : employees) {
+		addLineItemToPage(e);
+		if (page.size() == PAGE_SIZE)
+		  printAndClearItemList();
+	  }
+	  if (page.size() > 0)
+		printAndClearItemList();
+	}
+
+	private void printAndClearItemList() {
+	  formatter.format(page);
+	  page.clear();
+	}
+
+	private void addLineItemToPage(HourlyEmployee e) {
+	  LineItem item = new LineItem();
+	  item.name = e.getName();
+	  item.hours = e.getTenthsWorked() / 10;
+
+	  item.tenths = e.getTenthsWorked() % 10;
+	  page.add(item);
+	}
+
+	public class LineItem {
+	  public String name;
+	  public int hours;
+	  public int tenths;
+	}
+  }
+```
+
+Why the `PAGE_SIZE` is defined in this class -- `HourlyReporter`. It is a misplaced principle (See `G17` section).
+
+##### G23: Prefer Polymorphism to If/Else or Switch/Case
+
+The author of the book uses the following `ONE SWITCH` rule: 
+
+```
+There may be no more than one switch statement for a given type of selection.
+The cases in that switch statement must create polymorphic objects that
+take the place of other such switch statements in the rest of the system.
+```
+
+##### G24: Follow Standard Conventions
+Each team must follow same conventions to develop a big project. The main purpose is that make it consistency to make it more readable and more maintenable.
+
+##### G25: Replace Magic Numbers with Named Constants
+
+> [!IMPORTANT]
+> In most cases, looking at a code with all numbers is less readable than looking at a code with a named constants.
+
+##### G26: Be Precise
+
+> [!IMPORTANT]
+> In most case, the value must be stored precisely.
+
+Consider about a bank system.
+
+If the balance of an account is stored as a floating number (for example `float` type in Kotlin which can store up to 6th decimal place), then one year later, the interest will be evaluated with balance and the interest rate of the bank as follows. 
+
+While, the new balance will be evaluated with the interest we just evaluated and old balance as follows.
+
+```
+<newInterest> = <oldBalance> * <interstRate>
+<newBalance> = <oldBalance> + <netInterest>
+```
+
+There are more and more huge error, aren't there?
+
+The easiest way to solve this problem is that store the balance with integer type. When it is a float number, round it to an integer.
+
+##### G27: Structure over Convention
+Since 
++ in most progamming language, it is forced to implement all abstract methods for those in base class and
++ it is ***NOT*** forced to implement all `switch` statement with same way,
+
+it is prefer to use base class with abstract method than use `switch` statement, if possible.
+
+##### G28: Encapsulate Conditions
+
+To check a timer should be delete, write as follows.
+
+`G28_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+private Boolean shouldBeDeleted(int timer){
+	return timer.hasExpired() && !timer.isRecurrent();
+}
+...
+
+if (shouldBeDeleted(timer))
+```
+
+and 
+
+`G28_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+if (timer.hasExpired() && !timer.isRecurrent())
+```
+
+Above two code snippets do the same thing. Which is more readable?
+
+Obviously, `G28_1.java` at Example Code of `<<Clean Code>>`[^1] is more readable, isn't it?
+
+##### G29: Avoid Negative Condition
+
+> [!IMPORTANT]
+> A negative condition is a little bit harder to understand than a positive condition.
+
+`G29_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+if (buffer.shouldCompact())
+```
+
+and
+
+`G29_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+if (!buffer.shouldNotCompact())
+```
+
+Above two code snippets do the same thing. Which is more readable?
+
+Obviously, `G29_1.java` at Example Code of `<<Clean Code>>`[^1] is more readable, isn't it?
+
+Thus, `G29_1.java` at Example Code of `<<Clean Code>>`[^1] is more preferable.
+
+##### G30: Functions Should Do One Thing
+
+> [!IMPORTANT]
+> Each function should do one thing. Otherwise, it will violate the single-responsibility principle.
+
+`G30_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public void pay() {
+     for (Employee e : employees) {
+       if (e.isPayday()) {
+         Money pay = e.calculatePay();
+         e.deliverPay(pay);
+       }
+     }
+   }
+```
+
+can be rewritten as 
+
+`G30_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public void pay() {
+	for (Employee e : employees)
+	  payIfNecessary(e);
+  }
+
+  private void payIfNecessary(Employee e) {
+	if (e.isPayday())
+	  calculateAndDeliverPay(e);
+  }
+
+  private void calculateAndDeliverPay(Employee e) {
+	Money pay = e.calculatePay();
+	e.deliverPay(pay);
+  }
+```
+
+##### G31: Hidden Temporal Coupling
+
+Consider the following example.
+
+The order of the three functions is important. 
+
+One can dive for the moog before one finishes to saturate. One can saturate the gradient before one finishes reticulate the splines.
+
+`G31_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class MoogDiver {
+	Gradient gradient;
+	List<Spline> splines;
+
+	public void dive(String reason) {
+	  saturateGradient();
+	  reticulateSplines();
+	  diveForMoog(reason);
+	}
+	…
+  }
+```
+
+However, the code does NOT force to hidden the temporal coupling, other programmers may miswrite -- call `reticulateSplines` function before call `saturateGradient` function and thus throw an exception.
+
+In the following code, other programmers does NOT miswrite than the above code. 
+
+That is, it has lower probability to occur that call `reticulateSplines` function before call `saturateGradient` function
+
+`G31_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class MoogDiver {
+	Gradient gradient;
+	List<Spline> splines;
+
+	public void dive(String reason) {
+	  Gradient gradient = saturateGradient();
+	  List<Spline> splines = reticulateSplines(gradient);
+	  diveForMoog(splines, reason);
+	}
+	…
+  }
+```
+
+##### G32: Don't Be Aribitary
+The concept of one writes the code carelessly is similar to one produces a car carelessly. 
+
+It also applies to the concept of one organize the code.
+
+> [!CAUTION]
+> It is dangerous to be careless about your code.
+
+##### G33: Encapsulate Boundary Conditions
+
+> [!IMPORTANT]
+> Encapsulating variables in boundary conditions is more readable.
+
+Though it has a little fix, it does matter for developing a huge project.
+
+Consider the following example.
+
+`G33_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+if(level + 1 < tags.length)
+   {
+     parts = new Parse(body, tags, level + 1, offset + endTag);
+     body = null;
+   }
+```
+
+`G33_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+int nextLevel = level + 1;
+   if(nextLevel < tags.length)
+   {
+     parts = new Parse(body, tags, nextLevel, offset + endTag);
+     body = null;
+   }
+```
+
+Which is more readable?
+
+Obviously, `G33_2.java` at Example Code of `<<Clean Code>>`[^1] is more readable, isn't it?
+
+##### G34: Functions Should Descend Only One Level of Abstraction
+
+Consider the following example
+
+`G34_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public String render() throws Exception
+   {
+     StringBuffer html = new StringBuffer(“<hr”);
+     if(size > 0)
+       html.append(” size=\“”).append(size + 1).append(”\“”);
+     html.append(“>”);
+ 
+     return html.toString();
+   }
+```
+
+`G34_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public String render() throws Exception
+   {
+     HtmlTag hr = new HtmlTag(“hr”);
+     if (extraDashes > 0)
+       hr.addAttribute(“size”, hrSize(extraDashes));
+     return hr.html();
+   }
+ 
+   private String hrSize(int height)
+   {
+     int hrSize = height + 1;
+     return String.format(“%d”, hrSize);
+   }
+```
+
+Which is more readable?
+
+Obviously, `G34_2.java` at Example Code of `<<Clean Code>>`[^1] is more readable, isn't it?
+
+##### G35: Keep Configurable Data at High Levels
+
+`G35_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public static void main(String[] args) throws Exception
+     {
+       Arguments arguments = parseCommandLine(args);
+       …
+     }
+ 
+   public class Arguments
+   {
+     public static final String DEFAULT_PATH = “.”;
+     public static final String DEFAULT_ROOT = “FitNesseRoot”;
+     public static final int DEFAULT_PORT = 80;
+     public static final int DEFAULT_VERSION_DAYS = 14;
+     …
+   }
+```
+
+The command-line arguments are parsed in the very first executable line of FitNesse. The default values of those arguments are specified at the top of the Argument class. You don’t have to go looking in low levels of the system for statements like this one:
+
+```
+   if (arguments.port == 0) // use 80 by default
+```
+
+##### G36: Avoid Transitive Nagivation
+
+According [Law of Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter), one should avoid transitive navigation. 
+
+One ***DON'T*** want to write this.
+
+`G36_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+a.getB().getC().doSomething();
+```
+
+In above code, if one wants to inserts a new module `Q` between module `B` and module `C`, 
+
+then code will looks like this.
+
+`G36_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+a.getB().getQ().getC().doSomething();
+```
+
+It will be rough to read.
+
+The better way to increase the readability is that rewrite the above code as follows.
+
+`G36_3.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+myCollaborator = a.getB().getQ().getC()
+myCollaborator.doSomething();
+```
+
+At the book [`<<The Pragmatic Programmer>>`](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) calls it as `Writing Shy code`.
+
+#### Java
+##### J1: Avoid Long Import List by Using Wilcard
+
+> [!IMPORTANT]
+> When more one class of the package or more method or class etc is used, it is recommended that import with wildcards `*`.
+
+I take a part of code from Android Studio samples.
+
+`J1_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+package com.example.platform.camera.common
+
+import android.content.Context
+import android.util.AttributeSet
+import android.util.Log
+import android.view.SurfaceView
+import kotlin.math.roundToInt
+```
+
+And I modify a little bit as follows.
+
+`J1_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+package com.example.platform.camera.common
+
+import android.content.Context
+import android.util.*
+import android.view.SurfaceView
+import kotlin.math.roundToInt
+```
+
+Which is more readable?
+
+I think `J1_2.java` at Example Code of `<<Clean Code>>`[^1] is more readable.
+
+##### J2: Don't Inherit Constants
+
+Consider the following code.
+
+`J2_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class HourlyEmployee extends Employee {
+	private int tenthsWorked;
+	private double hourlyRate;
+
+	public Money calculatePay() {
+	  int straightTime = Math.min(tenthsWorked, TENTHS_PER_WEEK);
+	  int overTime = tenthsWorked - straightTime;
+	  return new Money(
+		hourlyRate * (tenthsWorked + OVERTIME_RATE * overTime)
+	  );
+	}
+	…
+  }
+```
+
+Can one easily know where `TENTHS_PER_WEEK`, `OVERTIME_RATE` is defined?
+
+Obviously, one can't easily know.
+
+Look at parent class of `HourlyEmployee` -- `Employee` class.
+
+`J2_2.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public abstract class Employee implements PayrollConstants {
+	public abstract boolean isPayday();
+	public abstract Money calculatePay();
+	public abstract void deliverPay(Money pay);
+  }
+```
+
+Not found.
+
+Then look at the interface `PayrollConstants`.
+
+`J2_3.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public interface PayrollConstants {
+	public static final int TENTHS_PER_WEEK = 400;
+	public static final double OVERTIME_RATE = 1.5;
+  }
+```
+
+Found.
+
+As a reader, it is harder to find them and thus is less readable, isn't it?
+
+The better way is that use `import static`.
+
+`J2_4.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+import static PayrollConstants.*;
+ 
+   public class HourlyEmployee extends Employee {
+     private int tenthsWorked;
+     private double hourlyRate;
+ 
+     public Money calculatePay() {
+       int straightTime = Math.min(tenthsWorked, TENTHS_PER_WEEK);
+       int overTime = tenthsWorked - straightTime;
+       return new Money(
+         hourlyRate * (tenthsWorked + OVERTIME_RATE * overTime)
+       );
+     }
+     …
+   }
+```
+
+##### J4: Constants v.s. Enums
+
+> [!NOTE]
+> In Java 5 or above, enum is supported.
+
+> [!IMPORTANT]
+> use `public enum` instead of `public static final int`.
+
+use `public enum` instead of `public static final int`.
+
+use of `public static final int` will make the meaning of `int` dispear.
+
+but use of `enum` does NOT.
+
+
+> [!IMPORTANT]
+> `enum` has more functionality than `public final static int`.
+
+To explain that `enum` has more functionality than `public final static int`. 
+
+See the following example.
+
+`J3_1.java` at Example Code of `<<Clean Code>>`[^1]
+
+```
+public class HourlyEmployee extends Employee {
+     private int tenthsWorked;
+     HourlyPayGrade grade;
+ 
+     public Money calculatePay() {
+       int straightTime = Math.min(tenthsWorked, TENTHS_PER_WEEK);
+       int overTime = tenthsWorked - straightTime;
+       return new Money(
+         grade.rate() * (tenthsWorked + OVERTIME_RATE * overTime)
+       );
+     }
+     …
+   }
+   public enum HourlyPayGrade {
+     APPRENTICE {
+       public double rate() {
+         return 1.0;
+       }
+     },
+     LEUTENANT_JOURNEYMAN {
+       public double rate() {
+         return 1.2;
+       }
+     },
+     JOURNEYMAN {
+       public double rate() {
+         return 1.5;
+       }
+     },
+     MASTER {
+       public double rate() {
+         return 2.0;
+       }
+       };
+ 
+       public abstract double rate();
+   }
+```
 #### Names
 ##### N1: Choose Descriptive Name
 
@@ -682,6 +1362,17 @@ In an earlier section, we have discuss that
 > The best case should be that click one button to run the tests (only possible in IDE).
 >
 > The worst case should be type two commands (one for compilation, another for running) to run the tests in terminal.
+
+## Appreciation
+
+[The free version of `<<Clean Code>>`](https://aeryzhao.github.io/cleancode-book/#%E5%BA%8F)
+
+It provides full context of `<<Clean Code>>`. Because of this, I won't type these example code. I just have to copy and paste it.
+
+## Reference
+
+[The book `<<Clean code>>`](https://www.goodreads.com/book/show/3735293-clean-code)
+
 
 [^0]: O.S. means my opinion or something I want to say.
 
